@@ -1,0 +1,30 @@
+#login to the root user
+sudo su -
+#update ubuntu
+apt-get update -y
+#install docker
+apt install docker.io
+docker --version
+ps -ef | grep -i docker
+# 1st create one folder
+mkdir apache
+cd apache/
+#wget jqrrry url
+wget https://www.free-css.com/assets/files/free-css-templates/download/page268/flexed.zip
+apt install unzip
+unzip flexed.zip
+flexed
+cd flexed/
+vi dockerfile
+FROM httpd
+COPY . /var/local/apache/htdocs/
+docker build -t apache .
+docker images
+docker run -d -p 8081:80 apache
+# create IAM role with containerfullaccess policy atache that ec2 instance
+# create ECR bucket it will giving u some command linsrun that commands in shell
+aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 405740401707.dkr.ecr.ap-south-1.amazonaws.com
+docker build -t docker-container .
+docker tag docker-container:latest 405740401707.dkr.ecr.ap-south-1.amazonaws.com/docker-container:latest
+docker push 405740401707.dkr.ecr.ap-south-1.amazonaws.com/docker-container:latest
+

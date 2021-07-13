@@ -1,0 +1,122 @@
+1  echo "j" >/etc/hostname
+    2  hostname -F /etc/hostname
+    3  ps -ef | grep jenkins
+    4  ls -ltr
+    5  cd spring-framework-petclinic
+    6  ls -ltr
+    7  cat pom.xml
+    8  >pom.xml
+    9  cat pom.xml
+   10  vi pom.xml
+   11  cd
+   12  sudo rpm -Uvh https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+   13  rpm -Uvh https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+   14  cd /opt
+   15  rpm -Uvh https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+   16  ls -ltr
+   17  sudo yum install mysql-community-server
+   18  ls -ltr
+   19  systemctl start mysqld
+   20  systemctl enable mysqld
+   21  systemctl status  mysqld
+   22  mysql -h mysql.cdnmkxhqxdpl.ap-south-1.rds.amazonaws.com -u admin -p
+   23  cd opt
+   24  cd /opt
+   25  ls -lthr
+   26  clear
+   27  ls -lthr
+   28  git clone https://github.com/spring-petclinic/spring-framework-petclinic
+   29  ls -lthr
+   30  cd spring-framework-petclinic/
+   31  ls -lthr
+   32  cat pom.xml
+   33  cd ..
+   34  ls -lthr
+   35  cd spring-framework-petclinic/
+   36  ls -lthr
+   37  >pom.xml
+   38  vi pom.xml
+   39  mysql -h mysql.cdnmkxhqxdpl.ap-south-1.rds.amazonaws.com -u admin -p
+   40  cd /opt
+   41  ls -ltr
+   42  cd spring-framework-petclinic
+   43  pwd
+   44  ls -ltr
+   45  cd
+   46  cd/opt
+   47  cd /opt
+   48  #install maven in /opt
+   49  cd /opt
+   50  #download the zip
+   51  wget https://mirrors.estointernet.in/apache/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.zip
+   52  #extract
+   53  unzip apache-maven-3.8.1-bin.zip
+   54  #rename
+   55  mv apache-maven-3.8.1 maven38
+   56  #change the permissions
+   57  chmod -R 700 maven38
+   58  #delte the zip
+   59  rm -f apache-maven-3.8.1-bin.zip
+   60  ls -ltr
+   61  cd /spring-framework-petclinic
+   62  cd spring-framework-petclinic
+   63  pwd
+   64  /opt/maven38/bin/mvn clean package -P MySQL
+   65  pwd
+   66  ls -ltr
+   67  cd /target
+   68  cd target
+   69  ls -ltr
+   70  cd ..
+   71  ls
+   72  rm -fr target
+   73  ls
+   74  cd ..
+   75  ls -ltr
+   76  rm -fr spring-framework-petclinic
+   77  ls -ltr
+   78  git clone https://github.com/spring-petclinic/spring-framework-petclinic
+   79  cd spring-framework-petclinic/
+   80  ls -
+   81  ls
+   82  cat pom.xml
+   83  >pom.xml
+   84  cat pom.xml
+   85  vi pom.xml
+   86  ls -ltr
+   87  /opt/maven38/bin/mvn clean package -P MySQL
+   88  ls -ltr
+   89  vi pom.xml
+   90  ls -ltr
+   91  /opt/maven38/bin/mvn clean package -P MySQL
+   92  yum install git
+   93  git clone https://github.com/spring-petclinic/spring-framework-petclinic
+   94  ls -ltr
+   95  cat spring-framework-petclinic
+   96  cd /spring-framework-petclinic/
+   97  cd /spring-framework-petclinic
+   98  cd spring-framework-petclinic
+   99  ls -ltr
+  100  cat pom.xml
+  101  jenkins
+  102  ps -ef | grep jenkins
+  103  cd /opt
+  104  ls -ltr
+  105  rm -fr spring-framework-petclinic
+  106  ls -ltr
+  107  git
+  108  ls -ltr
+  109  cd spring-framework-petclinic
+  110  ls -ltr
+  111  cat pom.xml
+  112  >pom.xml
+  113  cat pom.xml
+  114  vi pom.xml
+  115  ls -ltr
+  116  /opt/maven38/bin/mvn clean package -P MySQl
+  117  ls -ltr
+  118  cd target/
+  119  pwd
+  120  ls -ltr
+  121  scp -i /home/ec2-user/mumbai.pem petclinic.war ec2-user@10.0.41.248:/tmp
+  122  history

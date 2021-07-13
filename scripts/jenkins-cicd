@@ -1,0 +1,122 @@
+1st - login to the AWS console in Root user with cridentials
+select Region -mumbai
+2nd - create vpc under vpc we have create subnets,routetables,i-gateway and 
+nat-gateway VPC ---Pre-Req CIDR range-10.0.0.0/16
+3rd - 1st we have to create 6-SG
+SG-create under vpc
+alb-jenkins http  80  anywhere
+            https 443 anywhere
+alb-tomcat http  80  anywhere
+            https 443 anywhere            
+bastion-  ssh  22  myip   
+jenkins   ssh  22  bastion-sg-id
+              8080  alb-jenkin-sg-id
+tomcat    ssh  22  bastion-sg-id
+          ssh  22  jenkins-sg-id
+              8080 alb-tomcat-sg-id
+rds-mysql rds  3306    jenkins-sg-id
+          rds  3306    bastion-sg-id
+          rds  3306    tomcat-sg-id          
+create instance bastion,jenkins and tomcat          
+instance create under bastion-public subnet
+                      jenkins-private subnet
+                      tomcat-private subnet
+
+launch instance
+1. Choose AMI2.
+2. Choose Instance Type 
+3. Configure Instance -hear select az
+4. Add Storage 
+5. Add Tags 
+6. Configure Security Group
+7. Review
+Create database
+rds can create under M-AZ in private(data)-
+   mysql version-5.7.33 
+   admin-password
+   subnetgroups
+   snapshots
+go to the git bash
+login to the bastion from downloads
+   scp -i file.pem target.file ec2-user@publicIP:/tmp
+   ssh -i file.pem ec2-user@publicIP
+   sudo su -
+   chmod 400 file.pem
+   echo "bastion" >/etc/hostname
+   hostname -F /etc/hostname
+install mysql
+   yum install mysql -yes
+login RDS 
+   mysql -h rds end point -u admin -password
+   create database;
+create user;
+   CREATE USER 'dev_petclinicuser'@'%' IDENTIFIED BY 'passwd'; 
+   GRANT ALL PRIVILEGES ON dev_petclinic.* TO 'dev_petclinicuser'@'%';
+   FLUSH PRIVILEGES;
+   exit(ctrl d) mysql
+passwd less setup   
+   ssh-keygen
+   cd .ssh
+   cat id_rsa.pub   --copy content
+copy this public to jankins and tomcat in authentication
+   cd ..
+   cd /tmp
+   ssh -i file.pem jenkin privateIP
+   sudo su -
+   visudo
+   vi /etc/sudoers.d/90-cloud
+install jenkins
+pre-req:-java
+    /var/lib/jenkins/workspace
+to enter jenkin user
+   su - jenkins -s /bin/bash
+i dont want use this command paramanently change command
+   cd /etc--passwd
+   vi passwd  
+   su - jenkins
+   sudo yum install git
+install  maven
+pre-req:java
+generate key:
+    ssh-keygen 
+    cd .ssh
+    cat id_rsa-pub
+copy this public key github and tomcat in authentication
+    exit (ctrl-d) from jenkins user
+login tomcat
+install tomcat
+pre-req:java
+   /opt/tomcat/bin/
+   /ot/tomcat/webapps/
+CICD:
+enter jenkins gui with username and passwd
+Create a job(newitem)
+creating a freestyle project
+   1.general
+   2. scm
+      select git and provide github  repo url(http,ssh)
+   3. trigger
+       enable webhook-automation
+   4. build
+      open excutive shell
+   5.post build actions  
+      select another job
+excutive shell commands for CI:
+    for build the package
+     /var/lib/jenkins/worksapce/maven/bin/mvn clean package
+     warpath=/var/lib/jenkins/worckspace/jobname/target/
+     warfile=example.war
+     newwarfile=example-$BUILD_NUMBER.war
+     mv $warpath/$warfile $warpath/$newwarfile
+
+     aws s3 cp $warpath/$newwarfile s3://bugetname/
+
+
+excutive shell commands for CD:
+   scp /var/lib/jenkins/worckspace/jobname/target/example-$BUILD_NUMBER.war root@tomcat-pri-IP:/opt/tomcat/webapps/
+
+
+
+
+
+

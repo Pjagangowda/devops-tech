@@ -1,0 +1,71 @@
+#Step 1 – Install PHP & Apache
+apt-get update
+apt-get install wget build-essential unzip openssl libssl-dev -y
+apt-get install apache2 php libapache2-mod-php php-gd libgd-dev -y
+#Step 2 – Create a User and Group for Nagios
+adduser nagios_user
+#password-chamundeswari#12345
+#give some details
+groupadd nagcmd
+usermod -a -G nagcmd nagios_user
+usermod -a -G nagcmd www-data
+#Step 3 – Install Nagios Binaries
+cd /opt
+wget https://github.com/NagiosEnterprises/nagioscore/releases/download/nagios-4.4.3/nagios-4.4.3.tar.gz
+tar xzf nagios-4.4.3.tar.gz
+cd nagios-4.4.3
+./configure --with-command-group=nagcmd
+make all
+make install
+make install-init
+make install-daemoninit
+make install-config
+make install-commandmode
+make install-exfoliation
+cp -R contrib/eventhandlers/ /usr/local/nagios/libexec/
+chown -R nagios:nagios /usr/local/nagios/libexec/eventhandlers
+#Step 4 – Set Up Apache with an Authentication Gateway
+vi /etc/apache2/conf-available/nagios.conf
+# copy the in vi copy the bellow content
+ScriptAlias /nagios/cgi-bin "/usr/local/nagios/sbin"
+
+
+   Options ExecCGI
+   AllowOverride None
+   Order allow,deny
+   Allow from all
+   AuthName "Restricted Area"
+   AuthType Basic
+   AuthUserFile /usr/local/nagios/etc/htpasswd.users
+   Require valid-user
+
+
+Alias /nagios "/usr/local/nagios/share"
+
+
+   Options None
+   AllowOverride None
+   Order allow,deny
+   Allow from all
+   AuthName "Restricted Area"
+   AuthType Basic
+   AuthUserFile /usr/local/nagios/etc/htpasswd.users
+   Require valid-user
+
+htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
+a2enconf nagios
+a2enmod cgi rewrite
+service apache2 restart
+#Step 5 – Install Nagios Plugins
+cd /opt
+wget http://www.nagios-plugins.org/download/nagios-plugins-2.2.1.tar.gz
+tar xzf nagios-plugins-2.2.1.tar.gz
+cd nagios-plugins-2.2.1
+./configure --with-nagios-user=nagios --with-nagios-group=nagios --with-openssl
+make
+make install
+#Step 6 – Verify & Start Nagios
+/usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+service nagios start
+systemctl enable nagios
+#Step 7 – Access the Nagios Web Interface

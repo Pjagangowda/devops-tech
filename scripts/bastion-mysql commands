@@ -1,0 +1,17 @@
+   1  echo "bastion" >/etc/hostname
+    2  hostname -F /etc/hostname
+    3  ssh -i mumbai.pem ec2-user@10.0.19.218
+    4  su mysql
+    5  mysql -h mysql.cdnmkxhqxdpl.ap-south-1.rds.amazonaws.com
+    6  mysql -h mysql.cdnmkxhqxdpl.ap-south-1.rds.amazonaws.com -u admin -p
+    7  rpm -Uvh https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+    8  yum install mysql-community-server
+    9  systemctl enable mysqld
+   10  systemctl start mysqld
+   11  systemctl status mysqld
+   12  mysql -h mysql.cdnmkxhqxdpl.ap-south-1.rds.amazonaws.com -u admin -p
+   13  mysql
+   14  systemctl status mysqld
+   15  mysql -h mysql.cdnmkxhqxdpl.ap-south-1.rds.amazonaws.com -u admin -p
+   16  ssh -i mumbai.pem ec2-user@10.0.19.218
+   17  history

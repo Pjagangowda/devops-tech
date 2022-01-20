@@ -1,0 +1,49 @@
+launch bastion 
+
+launch jenkins 
+
+login to bastion and copy the pemfile from local to bastion through scp
+
+give permision to pemfile
+
+login to jenkins from bastion
+
+/var/lib/jenkins   generate the ssh-keygen  copy the id_rsa.pub  key to bastion .ssh authorizedkeys file
+ login from jenkins to bastion through private ip
+
+ssh -i id_rsa ec2-user@bastion privateip
+yes
+login to bastion
+
+go to jenkins console create a freestyle job 
+
+go to configure ----generals---parameters---string parameters
+
+1.pubkey   --variable name (must and should)
+2.empty  --optional
+3.give any discription  --description (optional)
+
+build
+
+execute shell
+
+echo $pubkey >temp_pubkey
+cat temp_pubkey | (ssh ec2-user@bastion private ip "cat >> /home/ec2-user/.ssh/authorized_keys")
+
+
+apply and save
+
+build with parameter
+
+give the  local ssh key 
+ build 
+
+
+job success  
+go to local  
+
+ssh -i id_rsa ec2-user@bastion public ip
+
+login success
+
+
